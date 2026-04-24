@@ -1,6 +1,7 @@
 package federicolepore.u5w20d5.security;
 
 import federicolepore.u5w20d5.entities.User;
+import federicolepore.u5w20d5.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +35,7 @@ public class TokenTools {
         try {
             Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build().parse(token);
         } catch (Exception ex) {
-            throw new RuntimeException();  //TODO sostituire con personalizzata
+            throw new UnauthorizedException("Sembra si siano verificati problemi con il token... ti prego di tentare nuovamente il login ");
         }
     }
 
