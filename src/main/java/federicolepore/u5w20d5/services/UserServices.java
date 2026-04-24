@@ -44,4 +44,22 @@ public class UserServices {
         return this.userRepository.findById(userId).orElseThrow(() -> new NotFoundException(userId));
     }
 
+    public User update(UUID id, UserDTO body) {
+        User u = this.findById(id);
+
+        if (!u.getEmail().equals(body.email()) && userRepository.existsByEmail(body.email()))
+            throw new BadRequestException("L'indirizzo email " + body.email() + " è già in uso ed associato ad un altro utente");
+
+        u.setName(body.name());
+        u.setSurname(body.surname());
+        u.setEmail(body.email());
+        u.setPassword(bcrypt.encode(body.password()));
+        return userRepository.save(u);
+    }
+
+    public void delete(User user) {
+
+        userRepository.delete(user);
+    }
+
 }
