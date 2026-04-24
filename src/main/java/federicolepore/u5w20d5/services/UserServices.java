@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @Slf4j
 public class UserServices {
@@ -36,6 +38,10 @@ public class UserServices {
     public User findByEmail(String email) {
         return this.userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("L'utente con email " + email + " non è stato trovato!"));
+    }
+
+    public User findById(UUID userId) {
+        return this.userRepository.findById(userId).orElseThrow(() -> new NotFoundException(userId));
     }
 
 }
