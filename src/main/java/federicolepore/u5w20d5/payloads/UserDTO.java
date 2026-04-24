@@ -1,5 +1,6 @@
 package federicolepore.u5w20d5.payloads;
 
+import federicolepore.u5w20d5.entities.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -22,6 +23,9 @@ public record UserDTO(
         @NotBlank(message = "La password è obbligatoria")
         @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
         @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$", message = "La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola e un numero")
-        String password
+        String password,
+
+        @NotBlank(message = "Specifica il tuo ruolo: vuoi organizzare eventi o andarci?")
+        Role role
 ) {
 }
