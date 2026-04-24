@@ -6,6 +6,9 @@ import federicolepore.u5w20d5.exceptions.NotFoundException;
 import federicolepore.u5w20d5.payloads.UserDTO;
 import federicolepore.u5w20d5.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +16,7 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class UserServices {
+public class UserServices implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder bcrypt;
@@ -21,6 +24,12 @@ public class UserServices {
     public UserServices(UserRepository userRepository, PasswordEncoder bcrypt) {
         this.userRepository = userRepository;
         this.bcrypt = bcrypt;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Utente con email " + email + " non trovato"));
     }
 
     public User save(UserDTO body) {
