@@ -2,6 +2,7 @@ package federicolepore.u5w20d5.services;
 
 import federicolepore.u5w20d5.entities.User;
 import federicolepore.u5w20d5.exceptions.BadRequestException;
+import federicolepore.u5w20d5.exceptions.NotFoundException;
 import federicolepore.u5w20d5.payloads.UserDTO;
 import federicolepore.u5w20d5.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -32,5 +33,9 @@ public class UserServices {
         return savedU;
     }
 
+    public User findByEmail(String email) {
+        return this.userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("L'utente con email " + email + " non è stato trovato!"));
+    }
 
 }
