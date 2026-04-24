@@ -1,4 +1,4 @@
-package federicolepore.u5w20d5.entities.repositories;
+package federicolepore.u5w20d5.repositories;
 
 import federicolepore.u5w20d5.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
