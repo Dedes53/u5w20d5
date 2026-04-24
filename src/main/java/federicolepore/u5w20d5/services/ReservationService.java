@@ -42,16 +42,16 @@ public class ReservationService {
         return reservationRepository.findByUser(user);
     }
 
-    public void deleteReservation(UUID bookingId, User currentUser) {
-        Reservation r = reservationRepository.findById(bookingId)
-                .orElseThrow(() -> new NotFoundException("La prenotazione con id " + bookingId + " non è stata trovata"));
+    public void deleteReservation(UUID reservationId, User currentUser) {
+        Reservation r = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new NotFoundException("La prenotazione con id " + reservationId + " non è stata trovata"));
         if (!r.getUser().getId().equals(currentUser.getId()))
             throw new UnauthorizedException("Non sei autorizzato a cancellare questa prenotazione");
-        // Reintegra il posto
+
         Event event = r.getEvent();
         event.setSeatsAvailable(event.getSeatsAvailable() + 1);
         reservationRepository.delete(r);
     }
 
-    
+
 }

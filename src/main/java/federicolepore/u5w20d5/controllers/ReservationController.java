@@ -23,9 +23,9 @@ public class ReservationController {
     // prenota un posto ad un evento
     @PostMapping("/{eventId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Reservation reserve(@PathVariable UUID id,
+    public Reservation reserve(@PathVariable UUID eventId,
                                @AuthenticationPrincipal User user) {
-        return reservationService.reserve(id, user);
+        return reservationService.reserve(eventId, user);
     }
 
     // visualizza prenotazioni per utente
@@ -37,9 +37,9 @@ public class ReservationController {
     //    cancella prenotazioen
     @DeleteMapping("/{reservationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteReservation(@PathVariable UUID resId,
+    public void deleteReservation(@PathVariable UUID reservationId,
                                   @AuthenticationPrincipal User user) {
-        reservationService.deleteReservation(resId, user);
+        reservationService.deleteReservation(reservationId, user);
     }
 
 }

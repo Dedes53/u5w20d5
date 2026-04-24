@@ -3,6 +3,7 @@ package federicolepore.u5w20d5.services;
 import federicolepore.u5w20d5.entities.Event;
 import federicolepore.u5w20d5.entities.Role;
 import federicolepore.u5w20d5.entities.User;
+import federicolepore.u5w20d5.exceptions.BadRequestException;
 import federicolepore.u5w20d5.exceptions.NotFoundException;
 import federicolepore.u5w20d5.exceptions.UnauthorizedException;
 import federicolepore.u5w20d5.payloads.EventDTO;
@@ -41,6 +42,9 @@ public class EventService {
 
     public Event save(EventDTO body, User organizer) {
 
+        if (eventRepository.existsByTitleAndDateAndLocation(body.title(), body.date(), body.location()))
+            throw new BadRequestException("Esiste già un evento con titolo '" + body.title() +
+                    "' il " + body.date() + " a " + body.location());
         if (!organizer.getRole().equals(Role.ORGANIZER))
             throw new UnauthorizedException("Solo gli organizzatori possono creare eventi");
 

@@ -2,12 +2,15 @@ package federicolepore.u5w20d5.exceptions;
 
 import federicolepore.u5w20d5.payloads.ErrorsDTO;
 import federicolepore.u5w20d5.payloads.ErrorsListDTO;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class exceptionHandler {
@@ -40,6 +43,15 @@ public class exceptionHandler {
         return new ErrorsListDTO(ex.getMessage(), LocalDateTime.now(), ex.getErrors());
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)  // ← 400 invece di 500
+    public ErrorsDTO handleValidationErrors(MethodArgumentNotValidException ex) {
+        String message = ex.getBindingResult().getAllErrors()
+                .stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.joining(", "));
+        return new ErrorsDTO(message, LocalDateTime.now());
+    }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500

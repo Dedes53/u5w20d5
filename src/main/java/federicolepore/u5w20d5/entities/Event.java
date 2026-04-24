@@ -19,7 +19,7 @@ public class Event {
     @Id
     @GeneratedValue
     @Setter(AccessLevel.NONE)
-    private UUID Id;
+    private UUID id;
 
 
     private String title;
@@ -41,5 +41,5 @@ public class Event {
         this.seatsAvailable = seatsAvailable;
         this.user = user;
     }
-    
+
 }
