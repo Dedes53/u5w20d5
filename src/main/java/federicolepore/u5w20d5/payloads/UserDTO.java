@@ -1,10 +1,7 @@
 package federicolepore.u5w20d5.payloads;
 
 import federicolepore.u5w20d5.entities.Role;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public record UserDTO(
         @NotBlank(message = "Il nome proprio è obbligatorio, non essere timido, dicci come ti chaimi")
@@ -25,7 +22,7 @@ public record UserDTO(
         @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$", message = "La password deve contenere almeno 8 caratteri, una lettera maiuscola, una minuscola e un numero")
         String password,
 
-        @NotBlank(message = "Specifica il tuo ruolo: vuoi organizzare eventi o andarci?")
+        @NotNull(message = "Specifica il tuo ruolo: vuoi organizzare eventi o andarci?")
         Role role
 ) {
 }
