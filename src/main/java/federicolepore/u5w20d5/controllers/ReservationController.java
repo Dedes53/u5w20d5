@@ -20,7 +20,6 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    // prenota un posto ad un evento
     @PostMapping("/{eventId}")
     @ResponseStatus(HttpStatus.CREATED)
     public Reservation reserve(@PathVariable UUID eventId,
@@ -28,18 +27,15 @@ public class ReservationController {
         return reservationService.reserve(eventId, user);
     }
 
-    // visualizza prenotazioni per utente
     @GetMapping("/me")
     public List<Reservation> getMyReservations(@AuthenticationPrincipal User user) {
         return reservationService.getUserReservation(user);
     }
 
-    //    cancella prenotazioen
     @DeleteMapping("/{reservationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteReservation(@PathVariable UUID reservationId,
                                   @AuthenticationPrincipal User user) {
         reservationService.deleteReservation(reservationId, user);
     }
-
 }
