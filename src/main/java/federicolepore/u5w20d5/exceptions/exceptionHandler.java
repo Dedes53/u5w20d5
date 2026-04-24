@@ -26,4 +26,11 @@ public class exceptionHandler {
     }
 
 
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND) // 404
+    public ErrorsDTO handleNotFoundEx(NotFoundException ex) {
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
+
 }
