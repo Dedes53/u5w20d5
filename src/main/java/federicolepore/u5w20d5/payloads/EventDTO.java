@@ -1,9 +1,9 @@
 package federicolepore.u5w20d5.payloads;
 
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -21,7 +21,7 @@ public record EventDTO(
         @NotBlank(message = "Il luogo è obbligatorio")
         String location,
 
-        @Size(min = 1, message = "I posti disponibili devono essere almeno 1")
+        @Min(value = 1, message = "I posti disponibili devono essere almeno 1")
         int seatsAvailable
 ) {
 }
